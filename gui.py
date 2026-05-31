@@ -27,8 +27,8 @@ class PlanProbeGui(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
         self.title("API Quota Tracker")
-        self.geometry("940x720")
-        self.minsize(860, 640)
+        self.geometry("1120x720")
+        self.minsize(980, 640)
 
         self.process: subprocess.Popen[str] | None = None
         self.reader_thread: threading.Thread | None = None
@@ -74,7 +74,7 @@ class PlanProbeGui(tk.Tk):
         self._entry(form, 2, 0, "API key", "api_key", "", show="*", width=48)
         self._entry(form, 2, 2, "Auth scheme", "auth_scheme", "Bearer")
         self._entry(form, 3, 0, "Auth header", "auth_header", "Authorization")
-        self._entry(form, 3, 2, "Output folder", "output_dir", str(APP_DIR / "runs"))
+        self._entry(form, 3, 2, "Output folder", "output_dir", "runs")
         ttk.Button(form, text="Browse", command=self._browse_output_dir).grid(row=3, column=4, sticky="ew", padx=(4, 8), pady=6)
 
         run_frame = ttk.LabelFrame(root, text="Probe settings")
@@ -234,7 +234,7 @@ class PlanProbeGui(tk.Tk):
         return True
 
     def _build_config(self) -> str:
-        output_dir = self.vars["output_dir"].get().strip() or str(APP_DIR / "runs")
+        output_dir = self.vars["output_dir"].get().strip() or "runs"
         return f"""[provider]
 name = {toml_quote(self.vars["provider_name"].get().strip())}
 base_url = {toml_quote(self.vars["base_url"].get().strip().rstrip("/"))}
@@ -318,7 +318,10 @@ body_keywords = ["rate limit", "too many requests", "quota", "insufficient", "li
             self.after(0, self._append_log, line)
             if line.startswith("Output directory:"):
                 path = line.split(":", 1)[1].strip()
-                self.latest_output_dir = Path(path)
+                output_path = Path(path)
+                if not output_path.is_absolute():
+                    output_path = APP_DIR / output_path
+                self.latest_output_dir = output_path
 
     def _poll_process(self) -> None:
         if not self.process:
@@ -355,7 +358,9 @@ body_keywords = ["rate limit", "too many requests", "quota", "insufficient", "li
         self.log.see(tk.END)
 
     def _open_output(self) -> None:
-        output_dir = Path(self.vars["output_dir"].get().strip() or APP_DIR / "runs")
+        output_dir = Path(self.vars["output_dir"].get().strip() or "runs")
+        if not output_dir.is_absolute():
+            output_dir = APP_DIR / output_dir
         target = self.latest_output_dir if self.latest_output_dir and self.latest_output_dir.exists() else output_dir
         if target.exists():
             os.startfile(target)  # type: ignore[attr-defined]

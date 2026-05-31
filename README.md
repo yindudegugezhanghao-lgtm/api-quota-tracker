@@ -2,6 +2,8 @@
 
 API Quota Tracker is a small open-source tool for measuring how many official API calls a plan allows in a time window.
 
+![API Quota Tracker GUI](docs/screenshots/gui-main.png)
+
 It is designed for:
 
 - OpenAI-compatible chat completion APIs
@@ -11,6 +13,13 @@ It is designed for:
 
 It is not designed to bypass provider limits, captchas, account restrictions, or terms of service.
 
+## Download
+
+- Latest release: https://github.com/yindudegugezhanghao-lgtm/api-quota-tracker/releases/latest
+- Source code ZIP: https://github.com/yindudegugezhanghao-lgtm/api-quota-tracker/archive/refs/heads/main.zip
+
+Do not put API keys into GitHub issues, screenshots, commits, or config files.
+
 ## Features
 
 - Sends tiny chat completion requests with `max_tokens = 1` by default.
@@ -19,6 +28,16 @@ It is not designed to bypass provider limits, captchas, account restrictions, or
 - Includes a Tkinter GUI for Windows and a CLI for automation.
 - Keeps API keys in environment variables and does not write them to output files.
 - Includes an optional Kimi CLI probe for Kimi Code Plan-style workflows.
+
+## Screenshots
+
+GUI:
+
+![GUI screenshot](docs/screenshots/gui-main.png)
+
+Sample report:
+
+![Sample report screenshot](docs/screenshots/sample-report.png)
 
 ## Quick Start On Windows
 
@@ -42,6 +61,8 @@ open_gui.bat
 6. If the smoke test works, click `Run until limit` or `Even window: 5h/1500`.
 
 The output folder will contain a human-readable `report.txt`.
+
+More detailed setup notes are in [docs/quickstart.md](docs/quickstart.md).
 
 ## CLI Usage
 
@@ -132,6 +153,8 @@ Read `report.txt` first. It explains:
 - which call first looked like a limit
 - whether the evidence points to auth, permission, quota, or rate limiting
 
+See [docs/examples.md](docs/examples.md) for a fake sample report and output layout.
+
 ## Optional Kimi CLI Probe
 
 If your plan is only available through the official Kimi CLI, use:
@@ -150,6 +173,8 @@ You must install and authenticate the official Kimi CLI yourself before using th
 - The GUI stores form settings but intentionally does not save the API key.
 - API keys are passed to the child process through environment variables.
 - Public issue reports should remove provider keys, request IDs, account IDs, and private endpoint URLs.
+
+Read [docs/security.md](docs/security.md) before publishing logs or screenshots.
 
 ## Development
 

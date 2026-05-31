@@ -1,0 +1,32 @@
+API Quota Tracker Report
+
+Provider / model: example-provider / example-small-model
+Mode: run until a limit signal appears
+Started: 2026-05-31T12:00:00+08:00
+Ended: 2026-05-31T12:04:31+08:00
+
+Summary
+- Submitted calls: 120
+- Completed results: 120
+- Successful calls: 119
+- Failed or limited calls: 1
+- First suspected quota/rate-limit signal appeared at call 120.
+- Rough successful-call estimate under these settings: about 119.
+
+Interpretation
+If this happened very quickly with HTTP 429, it may be a short rate-limit window rather than the total plan quota.
+Try setting min_interval_seconds to 0.5 or 1 and compare another run.
+
+Evidence
+- HTTP status counts: 200: 119, 429: 1
+- Client/network error counts: none
+- First limit status: 429
+- First limit response headers: retry-after: 60
+
+Output files
+- Report: runs/20260531-120000-example-provider/report.txt
+- Summary JSON: runs/20260531-120000-example-provider/summary.json
+- Per-call log: runs/20260531-120000-example-provider/results.jsonl
+
+Reminder
+Do not run the same account in several quota tests at once, or the results will include calls from other tools.

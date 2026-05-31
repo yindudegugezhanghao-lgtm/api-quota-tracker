@@ -1,6 +1,6 @@
 [project]
 name = "api-quota-tracker"
-version = "0.1.0"
+version = "0.1.1"
 description = "Track API call capacity and quota behavior for OpenAI-compatible endpoints."
 readme = "README.md"
 requires-python = ">=3.11"

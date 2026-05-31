@@ -1,0 +1,21 @@
+[project]
+name = "api-quota-tracker"
+version = "0.1.0"
+description = "Track API call capacity and quota behavior for OpenAI-compatible endpoints."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "API Quota Tracker contributors" }]
+keywords = ["api", "quota", "rate-limit", "openai-compatible", "tkinter"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+
+[project.scripts]
+api-quota-tracker = "plan_probe:main"
+
+[tool.ruff]
+line-length = 120

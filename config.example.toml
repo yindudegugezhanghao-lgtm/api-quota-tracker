@@ -1,0 +1,40 @@
+[provider]
+name = "example-openai-compatible"
+base_url = "https://api.example.com/v1"
+path = "/chat/completions"
+model = "your-model-name"
+api_key_env = "PROVIDER_API_KEY"
+auth_header = "Authorization"
+auth_scheme = "Bearer"
+
+# Optional extra headers, for providers that require custom headers.
+[provider.headers]
+# X-Provider-App = "your-app-id"
+
+[run]
+pacing = "fast"
+duration = "5h"
+max_calls = 100000
+concurrency = 1
+min_interval_seconds = 0
+request_timeout_seconds = 60
+output_dir = "runs"
+stop_on_limit = true
+
+[request]
+prompt = "Reply with OK."
+max_tokens = 1
+temperature = 0
+
+[limit_detection]
+status_codes = [402, 403, 429]
+body_keywords = [
+  "rate limit",
+  "too many requests",
+  "quota",
+  "insufficient",
+  "limit exceeded",
+  "quota exceeded",
+  "payment required",
+  "insufficient balance",
+]
